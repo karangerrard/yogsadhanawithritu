@@ -4,9 +4,9 @@ import styles from './Navbar.module.css'
 
 const NAV_LINKS = [
   { label: 'Home',     href: '#home' },
-  { label: 'About',    href: '#services' },
-  { label: 'Benefits', href: '#testimonials' },
-  { label: 'Blog',     href: '#blog' },
+  { label: 'About Me',    href: '#services' },
+  { label: 'Offerings', href: '#services' },
+  { label: 'Reviews',     href: '#testimonials' },
   { label: 'Contact',  href: '#contact' },
 ]
 
@@ -51,7 +51,7 @@ export function Navbar(): JSX.Element {
         </nav>
 
         {/* Desktop CTA */}
-        <a href="#contact" className={styles.ctaBtn}>Get Started</a>
+        <a href="#contact" className={styles.ctaBtn}>Book Now</a>
 
         {/* Hamburger (mobile only) */}
         <button
@@ -80,7 +80,7 @@ export function Navbar(): JSX.Element {
             </a>
           ))}
           <a href="#contact" className={styles.mobileCta} onClick={handleNavClick}>
-            Get Started
+            Book Now
           </a>
         </nav>
       )}
