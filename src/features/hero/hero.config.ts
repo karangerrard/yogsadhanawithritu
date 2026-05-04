@@ -20,14 +20,14 @@
  */
 
 // ── Step 1: Import your images here ─────────────────────────────────────────
-// import desktopPose from '@assets/images/hero-desktop.png'   // ← uncomment & edit
-// import mobilePose  from '@assets/images/hero-mobile.png'    // ← uncomment & edit
+ import desktopPose from '@assets/images/yoga_hero.jpg'   // ← uncomment & edit
+ import mobilePose  from '@assets/images/yoga_hero.jpg'    // ← uncomment & edit
 
 // ── Step 2: Reference them in the config below ───────────────────────────────
 export const heroConfig = {
   // ── Images (swap these to update the yoga pose) ────────────────────────────
-  desktopImage: 'https://placehold.co/600x560/CAD2C5/52796F?text=Your+Yoga+Pose+Here',
-  mobileImage:  'https://placehold.co/400x380/CAD2C5/52796F?text=Your+Yoga+Pose+Here',
+  desktopImage: desktopPose,  // ← update to your desktop image path or URL
+  mobileImage:  mobilePose,   // ← update to your mobile image path or URL
 
   // Alt text for accessibility — update to describe your actual pose
   imageAlt: 'Woman sitting in a peaceful lotus meditation pose surrounded by leaves',
