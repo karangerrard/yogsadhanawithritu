@@ -1,0 +1,358 @@
+/* ─── Hero Section ────────────────────────────────────────────────────────── */
+.hero {
+  background-color: var(--color-cream);
+  padding-top: var(--nav-height);
+  position: relative;
+  overflow: hidden;
+}
+
+/* Decorative large leaf in bottom-left corner */
+.hero::before {
+  content: '';
+  position: absolute;
+  bottom: 80px;
+  left: -60px;
+  width: clamp(120px, 20vw, 200px);
+  height: clamp(180px, 30vw, 300px);
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 200' fill='%23CAD2C5'%3E%3Cpath d='M50 200 C20 150 0 100 10 50 C20 0 80 0 90 50 C100 100 80 150 50 200Z'/%3E%3Cline x1='50' y1='200' x2='50' y2='50' stroke='%23B5C4B1' stroke-width='2'/%3E%3C/svg%3E");
+  background-size: contain;
+  background-repeat: no-repeat;
+  opacity: 0.6;
+  pointer-events: none;
+}
+
+/* ── Layout: desktop side-by-side, mobile stacked ─────────────────────────── */
+.heroInner {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  align-items: center;
+  gap: var(--space-xl);
+  min-height: calc(90vh - var(--nav-height));
+  padding-top: var(--space-xl);
+  padding-bottom: var(--space-xl);
+}
+
+/* ── Content (left col) ───────────────────────────────────────────────────── */
+.content {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-md);
+  opacity: 0;               /* starts hidden; JS adds .animate-in */
+  transition: opacity 0.6s ease, transform 0.6s ease;
+  transform: translateY(24px);
+}
+
+/* After scroll reveal */
+:global(.animate-in) .content,
+.content:global(.animate-in) {
+  opacity: 1;
+  transform: none;
+}
+
+.heading {
+  display: flex;
+  flex-direction: column;
+  font-family: var(--font-display);
+  font-weight: 700;
+  line-height: 1.1;
+  letter-spacing: -0.02em;
+}
+
+.headingLine1 {
+  font-size: var(--text-5xl);
+  color: var(--color-sage-deeper);
+}
+
+.headingLine2 {
+  font-size: var(--text-5xl);
+  color: var(--color-sage-dark);
+}
+
+/* Leaf divider */
+.divider {
+  display: flex;
+  align-items: center;
+  gap: var(--space-sm);
+  color: var(--color-sage);
+}
+
+.dividerLine {
+  flex: 1;
+  max-width: 48px;
+  height: 1px;
+  background-color: var(--color-sage-light);
+}
+
+.dividerLeaf {
+  width: 16px;
+  height: 16px;
+  color: var(--color-sage);
+}
+
+.subheading {
+  font-size: var(--text-lg);
+  color: var(--color-text-secondary);
+  line-height: 1.7;
+  max-width: 42ch;
+}
+
+/* ── CTA Buttons ──────────────────────────────────────────────────────────── */
+.ctas {
+  display: flex;
+  flex-wrap: wrap;
+  gap: var(--space-sm);
+  margin-top: var(--space-xs);
+}
+
+.ctaPrimary {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  padding: 0.875em 2em;
+  background-color: var(--color-sage-dark);
+  color: var(--color-text-white);
+  border-radius: var(--radius-full);
+  font-size: var(--text-base);
+  font-weight: 500;
+  transition: background-color var(--transition-base), transform var(--transition-fast);
+  white-space: nowrap;
+}
+
+.ctaPrimary:hover {
+  background-color: var(--color-sage-deeper);
+  transform: translateY(-2px);
+}
+
+.ctaSecondary {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.5em;
+  padding: 0.875em 2em;
+  background-color: transparent;
+  color: var(--color-sage-deeper);
+  border: 2px solid var(--color-sage-dark);
+  border-radius: var(--radius-full);
+  font-size: var(--text-base);
+  font-weight: 500;
+  transition: background-color var(--transition-base), transform var(--transition-fast);
+  white-space: nowrap;
+}
+
+.ctaSecondary:hover {
+  background-color: var(--color-sage-light);
+  transform: translateY(-2px);
+}
+
+.playIcon {
+  font-size: 0.75em;
+}
+
+/* ── Image (right col) ────────────────────────────────────────────────────── */
+.imageWrapper {
+  position: relative;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+/* Organic blob background behind the yoga pose */
+.blobBg {
+  position: absolute;
+  inset: 5% 10%;
+  background-color: var(--color-sage-light);
+  border-radius: 60% 40% 70% 30% / 50% 60% 40% 50%;
+  opacity: 0.5;
+}
+
+.heroPose {
+  position: relative;
+  z-index: 1;
+  width: 100%;
+  max-width: 560px;
+  height: auto;
+  object-fit: contain;
+  /* Smooth swap transition when src changes */
+  transition: opacity 0.4s ease;
+}
+
+/* Decorative elements */
+.deco {
+  position: absolute;
+  color: var(--color-sage);
+  opacity: 0.5;
+  font-weight: 300;
+  pointer-events: none;
+  z-index: 2;
+}
+
+.decoPlus1 { top: 12%; left: 2%;  font-size: 1.25rem; }
+.decoPlus2 { top: 6%;  right: 5%; font-size: 1rem;    }
+
+.decoCircle1,
+.decoCircle2 {
+  width: 12px;
+  height: 12px;
+  border: 2px solid var(--color-sage);
+  border-radius: 50%;
+  background: none;
+  opacity: 0.4;
+}
+
+.decoCircle1 { top: 45%; left: 0%; }
+.decoCircle2 { top: 55%; right: 2%; }
+
+.decoDot {
+  width: 6px;
+  height: 6px;
+  background-color: var(--color-sage);
+  border-radius: 50%;
+  top: 30%;
+  left: 8%;
+  opacity: 0.35;
+}
+
+/* ── Wave divider ─────────────────────────────────────────────────────────── */
+.waveWrapper {
+  line-height: 0;
+  margin-top: var(--space-xl);
+}
+
+.wave {
+  width: 100%;
+  height: clamp(40px, 6vw, 80px);
+}
+
+/* ── Stats Strip ──────────────────────────────────────────────────────────── */
+.statsStrip {
+  background-color: var(--color-cream-warm);
+  padding-block: var(--space-xl);
+}
+
+.statsGrid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: var(--space-md);
+  text-align: center;
+}
+
+.statCard {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: var(--space-xs);
+  position: relative;
+}
+
+/* Vertical divider between cards (desktop only) */
+.statCard:not(:last-child)::after {
+  content: '';
+  position: absolute;
+  right: 0;
+  top: 20%;
+  height: 60%;
+  width: 1px;
+  background-color: var(--color-sage-light);
+}
+
+.statIcon {
+  width: clamp(48px, 8vw, 64px);
+  height: clamp(48px, 8vw, 64px);
+  border-radius: 50%;
+  background-color: var(--color-sage-light);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: var(--color-sage-dark);
+  margin-bottom: var(--space-xs);
+}
+
+.statIcon svg {
+  width: 52%;
+  height: 52%;
+}
+
+.statDivider {
+  display: none; /* handled by ::after */
+}
+
+.statTitle {
+  font-size: var(--text-base);
+  font-weight: 600;
+  color: var(--color-text-primary);
+}
+
+.statDesc {
+  font-size: var(--text-sm);
+  color: var(--color-text-secondary);
+  line-height: 1.5;
+}
+
+/* ─── Responsive: Mobile ──────────────────────────────────────────────────── */
+@media (max-width: 767px) {
+  .heroInner {
+    grid-template-columns: 1fr;
+    min-height: unset;
+    padding-top: var(--space-md);
+    padding-bottom: 0;
+    text-align: center;
+  }
+
+  /* On mobile: image goes ON TOP, content below */
+  .imageWrapper {
+    order: -1;
+  }
+
+  .content {
+    align-items: center;
+  }
+
+  .subheading {
+    max-width: 36ch;
+    text-align: center;
+  }
+
+  .ctas {
+    flex-direction: column;
+    align-items: stretch;
+    width: 100%;
+    max-width: 320px;
+  }
+
+  .ctaPrimary,
+  .ctaSecondary {
+    width: 100%;
+  }
+
+  .heroPose {
+    max-width: 320px;
+  }
+
+  .statsGrid {
+    gap: var(--space-sm);
+  }
+
+  .statCard::after {
+    display: none; /* remove vertical dividers on mobile */
+  }
+
+  .statTitle {
+    font-size: var(--text-sm);
+  }
+
+  .statDesc {
+    display: none; /* hide descriptions on very small screens */
+  }
+}
+
+/* ─── Tablet middle ground ────────────────────────────────────────────────── */
+@media (min-width: 768px) and (max-width: 1023px) {
+  .heroInner {
+    grid-template-columns: 1fr 1fr;
+    gap: var(--space-lg);
+  }
+
+  .heroPose {
+    max-width: 400px;
+  }
+}

@@ -1,0 +1,30 @@
+.footer {
+  background-color: var(--color-sage-deeper);
+  color: rgba(255,255,255,0.7);
+  padding-block: var(--space-lg);
+}
+
+.inner {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  flex-wrap: wrap;
+  gap: var(--space-sm);
+}
+
+.copy {
+  font-size: var(--text-sm);
+}
+
+.links {
+  display: flex;
+  gap: var(--space-md);
+}
+
+.links a {
+  font-size: var(--text-sm);
+  color: rgba(255,255,255,0.6);
+  transition: color var(--transition-fast);
+}
+
+.links a:hover { color: white; }

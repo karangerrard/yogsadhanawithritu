@@ -1,0 +1,140 @@
+/* ─── ZenLife Design Tokens ───────────────────────────────────────────────── */
+:root {
+  /* Brand Colors */
+  --color-sage-light: #CAD2C5;       /* Light sage — backgrounds, subtle fills */
+  --color-sage: #84A98C;             /* Primary sage — buttons, accents, brand */
+  --color-sage-dark: #52796F;        /* Dark sage — headings, hover states      */
+  --color-sage-deeper: #354F52;      /* Deeper sage — strong text, logo         */
+  --color-cream: #F5F5F0;            /* Off-white — page background             */
+  --color-cream-warm: #EDEEE8;       /* Warm cream — section alternates         */
+  --color-white: #FFFFFF;
+
+  /* Text */
+  --color-text-primary: #2C3E35;
+  --color-text-secondary: #5A6B62;
+  --color-text-muted: #8A9E92;
+  --color-text-white: #FFFFFF;
+
+  /* Typography */
+  --font-display: 'Cormorant Garamond', Georgia, serif;   /* Hero headings */
+  --font-body: 'DM Sans', system-ui, sans-serif;           /* Body, UI       */
+
+  /* Font Sizes — fluid clamp() so ONE set scales across ALL screens */
+  --text-xs:   clamp(0.75rem,  1.5vw, 0.875rem);
+  --text-sm:   clamp(0.875rem, 1.8vw, 1rem);
+  --text-base: clamp(1rem,     2vw,   1.125rem);
+  --text-lg:   clamp(1.125rem, 2.5vw, 1.25rem);
+  --text-xl:   clamp(1.25rem,  3vw,   1.5rem);
+  --text-2xl:  clamp(1.5rem,   4vw,   2rem);
+  --text-3xl:  clamp(2rem,     5vw,   3rem);
+  --text-4xl:  clamp(2.5rem,   6vw,   4rem);
+  --text-5xl:  clamp(3rem,     7vw,   5rem);
+
+  /* Spacing — fluid too */
+  --space-xs:  clamp(0.5rem,  1vw,  0.75rem);
+  --space-sm:  clamp(0.75rem, 2vw,  1rem);
+  --space-md:  clamp(1rem,    2.5vw, 1.5rem);
+  --space-lg:  clamp(1.5rem,  3vw,  2rem);
+  --space-xl:  clamp(2rem,    4vw,  3rem);
+  --space-2xl: clamp(3rem,    6vw,  5rem);
+  --space-3xl: clamp(4rem,    8vw,  7rem);
+
+  /* Layout */
+  --container-max: 1200px;
+  --container-padding: clamp(1rem, 5vw, 4rem);
+
+  /* Radius */
+  --radius-sm: 8px;
+  --radius-md: 16px;
+  --radius-lg: 24px;
+  --radius-full: 9999px;
+
+  /* Shadows */
+  --shadow-sm: 0 2px 8px rgba(44, 62, 53, 0.08);
+  --shadow-md: 0 4px 20px rgba(44, 62, 53, 0.12);
+  --shadow-lg: 0 8px 40px rgba(44, 62, 53, 0.16);
+
+  /* Transitions */
+  --transition-fast: 150ms ease;
+  --transition-base: 300ms ease;
+  --transition-slow: 500ms ease;
+
+  /* Nav height — used to offset scroll targets */
+  --nav-height: clamp(60px, 8vw, 80px);
+}
+
+/* ─── Reset ───────────────────────────────────────────────────────────────── */
+*,
+*::before,
+*::after {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
+
+html {
+  scroll-behavior: smooth;
+  -webkit-text-size-adjust: 100%;
+}
+
+body {
+  font-family: var(--font-body);
+  font-size: var(--text-base);
+  color: var(--color-text-primary);
+  background-color: var(--color-cream);
+  line-height: 1.6;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  overflow-x: hidden;
+}
+
+img,
+svg {
+  display: block;
+  max-width: 100%;
+}
+
+a {
+  color: inherit;
+  text-decoration: none;
+}
+
+button {
+  cursor: pointer;
+  border: none;
+  background: none;
+  font-family: inherit;
+}
+
+ul,
+ol {
+  list-style: none;
+}
+
+/* ─── Utility Classes ──────────────────────────────────────────────────────── */
+.container {
+  width: 100%;
+  max-width: var(--container-max);
+  margin-inline: auto;
+  padding-inline: var(--container-padding);
+}
+
+.section {
+  padding-block: var(--space-3xl);
+}
+
+/* Fade-in animation for scroll reveals */
+@keyframes fadeInUp {
+  from {
+    opacity: 0;
+    transform: translateY(24px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+.animate-in {
+  animation: fadeInUp 0.6s ease forwards;
+}
