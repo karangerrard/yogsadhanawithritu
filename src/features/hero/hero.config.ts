@@ -33,18 +33,18 @@ export const heroConfig = {
   imageAlt: 'Woman sitting in a peaceful lotus meditation pose surrounded by leaves',
 
   // ── Copy ───────────────────────────────────────────────────────────────────
-  headingLine1: 'Find Your',
-  headingLine2: 'Inner Peace',                  // ← rendered in brand green
+  headingLine1: 'Yogsadhana',                 // ← rendered in dark gray
+  headingLine2: 'With Ritu',                  // ← rendered in brand green
   subheading:
-    'Simple daily practices to reduce stress, improve focus, and bring calm to your everyday life.',
+    'Holistic online and corporate wellness experiences integrating yoga, pranayama, meditation, ayurveda, nutrition, and sound healing for sustainable well being.',
 
   // ── CTA Buttons ────────────────────────────────────────────────────────────
   primaryCta: {
-    label: 'Start Your Journey',
+    label: 'Book Session',
     href: '#contact',
   },
   secondaryCta: {
-    label: 'Watch Video',
+    label: 'View Schedule',
     href: '#video',
   },
 

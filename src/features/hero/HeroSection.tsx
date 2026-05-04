@@ -53,7 +53,6 @@ export function HeroSection(): JSX.Element {
               {heroConfig.primaryCta.label}
             </a>
             <a href={heroConfig.secondaryCta.href} className={styles.ctaSecondary}>
-              <span className={styles.playIcon} aria-hidden="true">▶</span>
               {heroConfig.secondaryCta.label}
             </a>
           </div>
@@ -85,12 +84,6 @@ export function HeroSection(): JSX.Element {
             />
           </picture>
 
-          {/* Decorative dots & plus signs */}
-          <span className={`${styles.deco} ${styles.decoPlus1}`} aria-hidden="true">+</span>
-          <span className={`${styles.deco} ${styles.decoPlus2}`} aria-hidden="true">+</span>
-          <span className={`${styles.deco} ${styles.decoCircle1}`} aria-hidden="true" />
-          <span className={`${styles.deco} ${styles.decoCircle2}`} aria-hidden="true" />
-          <span className={`${styles.deco} ${styles.decoDot}`} aria-hidden="true" />
         </div>
       </div>
 
