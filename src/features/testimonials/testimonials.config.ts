@@ -33,7 +33,7 @@ export const sectionMeta = {
   label: 'Google Reviews',
   heading: 'Words from the community',
   overallRating: 5,
-  totalReviews: 9,
+  totalReviews: 10,
 }
 
 // ── Review shape ─────────────────────────────────────────────────────────────
