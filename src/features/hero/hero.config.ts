@@ -36,16 +36,37 @@ export const heroConfig = {
   headingLine1: 'Yogsadhana',                 // ← rendered in dark gray
   headingLine2: 'With Ritu',                  // ← rendered in brand green
   subheading:
-    'Holistic online and corporate wellness experiences integrating yoga, pranayama, meditation, ayurveda, nutrition, and sound healing for sustainable well being.',
+    'Curated wellness experiences supporting clarity, balance, relaxation, and inner growth.',
+
+  // ── Service offerings ──────────────────────────────────────────────────────
+  // Displayed as a 2-column icon + label list below the subheading.
+  // Gives visitors an instant scannable overview before they read further.
+  // Edit labels freely. Stick to 4–6 items for visual balance.
+  services: [
+    { icon: '🧘', label: 'Yoga & Pranayama' },
+    { icon: '🪷', label: 'Meditation' },
+    { icon: '🌿', label: 'Ayurveda & Nutrition' },
+    { icon: '🎵', label: 'Sound Healing' },
+  ],
+
+  // ── Session types ──────────────────────────────────────────────────────────
+  // Pill badges that tell visitors immediately HOW they can work with you.
+  // This answers the first question a B2B or individual visitor asks:
+  // "Is this available to me / my organisation?"
+  sessionTypes: [
+    { label: 'Corporate Sessions' },
+    { label: 'Online 1-on-1' },
+    { label: 'Online Group Classes' },
+  ],
 
   // ── CTA Buttons ────────────────────────────────────────────────────────────
   primaryCta: {
-    label: 'Book Session',
+    label: 'Book Demo',
     href: '#contact',
   },
   secondaryCta: {
-    label: 'View Schedule',
-    href: '#video',
+    label: 'Contact Us',
+    href: '#contact',
   },
 
   // ── Stats strip at bottom of hero ─────────────────────────────────────────

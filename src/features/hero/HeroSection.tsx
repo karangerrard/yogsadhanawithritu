@@ -26,6 +26,23 @@ export function HeroSection(): JSX.Element {
 
           <p className={styles.subheading}>{heroConfig.subheading}</p>
 
+          {/* ── Service offerings — 2-col icon + label list ────────────── */}
+          <ul className={styles.serviceList} aria-label="Services offered">
+            {heroConfig.services.map((s, i) => (
+              <li key={i} className={styles.serviceItem}>
+                <span className={styles.serviceIcon} aria-hidden="true">{s.icon}</span>
+                <span className={styles.serviceLabel}>{s.label}</span>
+              </li>
+            ))}
+          </ul>
+
+          {/* ── Session type badges ────────────────────────────────────── */}
+          <div className={styles.sessionBadges} aria-label="Session formats available">
+            {heroConfig.sessionTypes.map((s, i) => (
+              <span key={i} className={styles.sessionBadge}>{s.label}</span>
+            ))}
+          </div>
+
           <div className={styles.ctas}>
             <a href={heroConfig.primaryCta.href} className={styles.ctaPrimary}>
               {heroConfig.primaryCta.label}
