@@ -1,0 +1,248 @@
+/* ─── About Section ───────────────────────────────────────────────────────── */
+.about {
+  background-color: var(--color-cream);
+  padding-block: var(--space-3xl);
+  overflow: hidden;
+}
+
+/* ── Two-column grid ──────────────────────────────────────────────────────── */
+.inner {
+  display: grid;
+  grid-template-columns: 1fr 1.1fr;
+  gap: clamp(2rem, 6vw, 5rem);
+  align-items: start;
+}
+
+/* ── Image column ─────────────────────────────────────────────────────────── */
+.imageColumn {
+  position: sticky;
+  top: calc(var(--nav-height) + 2rem);
+  /* Stays in view while credentials scroll past on the right */
+}
+
+/* Perspective container — fully transparent, no background, no shape.
+   The PNG image floats freely with no backdrop.
+   Perspective is applied inline on the imageRotor itself. */
+.perspectiveWrap {
+  width: 100%;
+  aspect-ratio: 4 / 5;
+  background: none;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+/* The image wrapper that actually rotates — background stays behind */
+.imageRotor {
+  width: 100%;
+  height: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  /* Hardware-accelerated — only this element rotates, not the background */
+  transform-style: preserve-3d;
+  will-change: transform;
+  /* No CSS transition — scroll position drives this directly for perfect sync */
+}
+
+.guideImage {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  object-position: top center;
+  display: block;
+  /* Prevent image from showing its back face mid-rotation */
+  backface-visibility: hidden;
+  -webkit-backface-visibility: hidden;
+  user-select: none;
+  pointer-events: none;
+}
+
+/* ── Placeholder (until real PNG is added) ────────────────────────────────── */
+.imagePlaceholder {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 1rem;
+  width: 100%;
+  height: 100%;
+  padding: 2rem;
+}
+
+.placeholderSvg {
+  width: 100px;
+  height: 130px;
+  opacity: 0.6;
+}
+
+.placeholderText {
+  font-size: var(--text-xs);
+  color: var(--color-text-muted);
+  text-align: center;
+  line-height: 1.6;
+}
+
+.placeholderText code {
+  font-size: 0.85em;
+  color: var(--color-sage-dark);
+  background: rgba(132, 169, 140, 0.12);
+  padding: 0.1em 0.4em;
+  border-radius: 3px;
+}
+
+/* ── Content column ───────────────────────────────────────────────────────── */
+.contentColumn {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-xl);
+}
+
+/* ── Title block ──────────────────────────────────────────────────────────── */
+.titleBlock {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-sm);
+}
+
+.sectionLabel {
+  font-size: var(--text-xs);
+  font-weight: 600;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  color: var(--color-sage);
+}
+
+.sectionTitle {
+  font-family: var(--font-display);
+  font-size: var(--text-4xl);
+  font-weight: 700;
+  color: var(--color-sage-deeper);
+  line-height: 1.15;
+  letter-spacing: -0.01em;
+}
+
+.bio {
+  font-size: var(--text-base);
+  color: var(--color-text-secondary);
+  line-height: 1.8;
+  max-width: 52ch;
+}
+
+/* ── Credential block ─────────────────────────────────────────────────────── */
+.credBlock {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-md);
+}
+
+.credBlockHeader {
+  display: flex;
+  align-items: center;
+  gap: var(--space-sm);
+  padding-bottom: var(--space-xs);
+  border-bottom: 1px solid var(--color-sage-light);
+}
+
+.credIcon {
+  font-size: 1.1rem;
+}
+
+.credBlockTitle {
+  font-family: var(--font-display);
+  font-size: var(--text-lg);
+  font-weight: 600;
+  color: var(--color-sage-deeper);
+  letter-spacing: 0.02em;
+}
+
+/* ── Credential list ──────────────────────────────────────────────────────── */
+.credList {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-md);
+}
+
+/* Individual credential row */
+.credRow {
+  display: grid;
+  grid-template-columns: 10px 1fr;
+  gap: 0 var(--space-sm);
+  align-items: start;
+}
+
+.credDot {
+  width: 7px;
+  height: 7px;
+  border-radius: 50%;
+  background-color: var(--color-sage);
+  margin-top: 6px;
+  flex-shrink: 0;
+}
+
+.credBody {
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+}
+
+.credQual {
+  font-size: var(--text-base);
+  font-weight: 600;
+  color: var(--color-text-primary);
+  line-height: 1.4;
+}
+
+.credDetail {
+  font-weight: 400;
+  color: var(--color-text-secondary);
+}
+
+.credInstitution {
+  font-size: var(--text-sm);
+  color: var(--color-sage-dark);
+  font-style: italic;
+}
+
+.credPeriod {
+  font-size: var(--text-xs);
+  color: var(--color-text-muted);
+  letter-spacing: 0.03em;
+  margin-top: 2px;
+}
+
+/* ─── Responsive: Tablet ──────────────────────────────────────────────────── */
+@media (max-width: 900px) {
+  .inner {
+    grid-template-columns: 1fr 1.3fr;
+    gap: var(--space-xl);
+  }
+
+  .imageColumn {
+    top: calc(var(--nav-height) + 1rem);
+  }
+}
+
+/* ─── Responsive: Mobile ──────────────────────────────────────────────────── */
+@media (max-width: 640px) {
+  .inner {
+    grid-template-columns: 1fr;
+  }
+
+  /* On mobile: image on top, credentials below — sticky doesn't apply */
+  .imageColumn {
+    position: relative;
+    top: auto;
+    /* Shorter aspect ratio so it doesn't dominate the viewport */
+    max-width: 260px;
+    margin-inline: auto;
+  }
+
+  .perspectiveWrap {
+    aspect-ratio: 3 / 4;
+  }
+
+  .sectionTitle {
+    font-size: var(--text-3xl);
+  }
+}
