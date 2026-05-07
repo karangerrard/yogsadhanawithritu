@@ -31,7 +31,6 @@ export const aboutConfig = {
       institution: 'Uttarakhand Sanskrit University, Haridwar',
       qualification: 'Masters in Yogacharya',
       detail: '8 CGPA',
-      period: 'Aug 2022 – Jul 2024',
     },
   ],
 
@@ -40,39 +39,43 @@ export const aboutConfig = {
       institution: 'Vinyasa Yoga School, Rishikesh',
       qualification: '500 Hours Yoga TTC',
       detail: 'Ashtanga Vinyasa',
-      period: 'May 2021 – Jul 2021',
     },
     {
       institution: 'Om Yoga Academy, Rishikesh',
       qualification: '200 Hours Yoga TTC',
       detail: 'Hatha Yoga',
-      period: 'Mar 2022 – Apr 2022',
     },
     {
       institution: 'Rama Space Sound Healing, Rishikesh',
       qualification: 'Sound Healing Teacher',
       detail: 'Level 1, 2 & 3',
-      period: 'Dec 2022 – Jan 2023',
     },
     {
       institution: 'Yog Upasana, Rishikesh',
       qualification: '3-Month Intensive',
       detail: 'Hatha & Iyengar Yoga',
-      period: 'Jul 2024 – Sep 2024',
     },
     {
       institution: 'Pancha Koshas, Rishikesh',
       qualification: 'Aerial Yoga Training',
       detail: 'Level 1 & 2',
-      period: 'Jan 2025',
     },
+    {
+      institution: 'Uttarakhand Sanskrit University, Haridwar',
+      qualification: 'Master’s in yogic science',
+      detail: 'Specialization in Hatha Yoga',
+    },
+    {
+      institution: 'Rishikesh Vinyasa Yoga School, Rishikesh',
+      qualification: 'PGD in Ayurveda & Nutrition Diet',
+      detail: 'Ashtanga Vinyasa',
+    }
   ],
 
   experience: [
     {
       institution: 'Rishikesh Vinyasa Yoga School, Rishikesh',
       role: 'Assistant Teacher',
-      period: '',
     },
   ],
 }
