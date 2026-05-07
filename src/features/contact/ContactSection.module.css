@@ -133,6 +133,30 @@
   box-shadow: 0 0 0 3px rgba(132, 169, 140, 0.15);
 }
 
+.btnGroup {
+  display: flex;
+  flex-wrap: wrap;
+  gap: var(--space-sm);
+  margin-top: var(--space-xs);
+}
+
+.whatsappBtn {
+  padding: 0.9em 2em;
+  background-color: var(--color-sage-dark);
+  color: white;
+  border-radius: var(--radius-full);
+  font-family: var(--font-body);
+  font-size: var(--text-base);
+  font-weight: 600;
+  transition: background-color var(--transition-base), transform var(--transition-fast);
+  align-self: flex-start;
+  background-color: #25D366;
+}
+
+.whatsappBtn:hover {
+  background-color: #1DA851;
+}
+
 .submitBtn {
   padding: 0.9em 2em;
   background-color: var(--color-sage-dark);
@@ -161,12 +185,28 @@
   font-weight: 500;
 }
 
+.inputError {
+  border-color: #e57373;
+  background-color: rgba(229, 115, 115, 0.05);
+}
+
+.errorText {
+  font-size: 0.85rem;
+  color: #c62828;
+  margin-top: 4px;
+}
+
 @media (max-width: 767px) {
   .inner {
     grid-template-columns: 1fr;
   }
 
   .submitBtn {
+    width: 100%;
+    text-align: center;
+  }
+
+  .whatsappBtn {
     width: 100%;
     text-align: center;
   }

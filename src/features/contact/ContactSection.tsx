@@ -11,8 +11,41 @@ export function ContactSection(): JSX.Element {
   const [status, setStatus] = useState<FormStatus>('idle')
   const headerRef = useScrollReveal<HTMLDivElement>()
 
-  const handleChange = (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>): void => {
-    setForm(prev => ({ ...prev, [e.target.name]: e.target.value }))
+  const handleChange = (
+  e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>
+  ): void => {
+    const { name, value } = e.target
+
+    setForm(prev => ({
+      ...prev,
+      [name]: value,
+    }))
+
+    /**
+     * Remove error instantly when user starts typing
+     */
+    if (value.trim()) {
+      setErrors(prev => ({
+        ...prev,
+        [name]: undefined,
+      }))
+    }
+  }
+
+  const [errors, setErrors] = useState<{ name?: string; message?: string }>({})
+
+  const handleWhatsApp = () => {
+    const phoneNumber = '919041918567' // Replace with your WhatsApp number in international format
+    if (!validateForm()) return
+
+    const message = `Hi, I'm ${form.name}.
+    ${form.email ? `Email: ${form.email}` : ''}
+    ${form.phone ? `Phone: ${form.phone}` : ''}
+
+    ${form.message}`
+
+      const url = `https://wa.me/${phoneNumber}?text=${encodeURIComponent(message)}`
+      window.open(url, '_blank')
   }
 
   const handleSubmit = async (e: React.MouseEvent<HTMLButtonElement>): Promise<void> => {
@@ -30,6 +63,21 @@ export function ContactSection(): JSX.Element {
     setStatus('success')
     setForm(initialForm)
   }
+
+  const validateForm = () => {
+  const newErrors: { name?: string; message?: string } = {}
+
+  if (!form.name.trim()) {
+    newErrors.name = 'We\'d love to know your name'
+  }
+
+  if (!form.message.trim()) {
+    newErrors.message = 'We\'d love to hear from you'
+  }
+
+  setErrors(newErrors)
+  return Object.keys(newErrors).length === 0
+}
 
   return (
     <section className={`section ${styles.contact}`} id="contact">
@@ -75,9 +123,10 @@ export function ContactSection(): JSX.Element {
                 placeholder="Your name"
                 value={form.name}
                 onChange={handleChange}
-                className={styles.input}
+                className={`${styles.input} ${errors.name ? styles.inputError : ''}`}
                 required
               />
+              {errors.name && <p className={styles.errorText}>{errors.name}</p>}
             </div>
 
             <div className={styles.formGroup}>
@@ -93,10 +142,10 @@ export function ContactSection(): JSX.Element {
             </div>
 
             <div className={styles.formGroup}>
-              <label htmlFor="phone" className={styles.label}>Phone (optional)</label>
+              <label htmlFor="phone" className={styles.label}>Phone (Optional)</label>
               <input
                 id="phone" name="phone" type="tel"
-                placeholder="+91 ..."
+                placeholder="Your phone number"
                 value={form.phone}
                 onChange={handleChange}
                 className={styles.input}
@@ -111,25 +160,35 @@ export function ContactSection(): JSX.Element {
                 rows={5}
                 value={form.message}
                 onChange={handleChange}
-                className={styles.textarea}
+                className={`${styles.textarea} ${errors.message ? styles.inputError : ''}`}
                 required
               />
+              {errors.message && <p className={styles.errorText}>{errors.message}</p>}
             </div>
+            
+            <div className={styles.btnGroup}>
+              <button
+                onClick={handleSubmit}
+                className={styles.submitBtn}
+                disabled={status === 'loading'}
+                type="button"
+              >
+                {status === 'loading' ? 'Sending…' : 'Send Email'}
+              </button>
+              <button
+                onClick={handleWhatsApp}
+                className={styles.whatsappBtn}
+                type="button"
+              >
+                WhatsApp Message
+              </button>   
 
-            <button
-              onClick={handleSubmit}
-              className={styles.submitBtn}
-              disabled={status === 'loading'}
-              type="button"
-            >
-              {status === 'loading' ? 'Sending…' : 'Send Message'}
-            </button>
-
-            {status === 'success' && (
-              <p className={styles.successMsg}>
-                ✅ Message sent! We'll get back to you within 24 hours.
-              </p>
-            )}
+              {status === 'success' && (
+                <p className={styles.successMsg}>
+                  ✅ Message sent! We'll get back to you within 24 hours.
+                </p>
+              )}
+            </div>
           </div>
         </div>
       </div>
