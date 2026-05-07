@@ -39,7 +39,7 @@ function useScrollRotation(ref: React.RefObject<HTMLElement>): number {
        * START POINT
        * Begin rotation as soon as the image/section tip enters viewport.
        */
-      const start = vh
+      const start = isMobile ? vh * 0.8 : vh * 0.45
 
       /**
        * END POINT

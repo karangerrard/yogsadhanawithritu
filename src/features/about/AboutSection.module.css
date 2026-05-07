@@ -234,12 +234,12 @@
     position: relative;
     top: auto;
     /* Shorter aspect ratio so it doesn't dominate the viewport */
-    max-width: 260px;
+    max-width: 300px;
     margin-inline: auto;
   }
 
   .perspectiveWrap {
-    aspect-ratio: 3 / 4;
+    aspect-ratio: 4 / 5;
   }
 
   .sectionTitle {
