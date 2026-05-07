@@ -37,7 +37,7 @@ export const servicesConfig = {
     {
       id: 'soundtherapy',
       icon: 'sound',
-      title: 'Sound Therapy',
+      title: 'Sound Therapy (Offline Only)',
       description: 'An immersive experience using sound and vibration to release stress, enhance clarity, and support emotional balance and deep inner relaxation.',
     },
   ],
