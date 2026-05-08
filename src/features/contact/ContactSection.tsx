@@ -3,6 +3,7 @@ import { contactConfig } from './contact.config'
 import { useScrollReveal } from '@hooks/useScrollReveal'
 import type { ContactFormData, FormStatus } from '@/types/index'
 import styles from './ContactSection.module.css'
+import emailjs from '@emailjs/browser'
 
 const initialForm: ContactFormData = { name: '', email: '', phone: '', message: '' }
 
@@ -32,11 +33,11 @@ export function ContactSection(): JSX.Element {
     }
   }
 
-  const [errors, setErrors] = useState<{ name?: string; message?: string }>({})
+  const [errors, setErrors] = useState<{ name?: string; email?: string; message?: string }>({})
 
   const handleWhatsApp = () => {
     const phoneNumber = '919041918567' // Replace with your WhatsApp number in international format
-    if (!validateForm()) return
+    if (!validateForm({ requireEmail: false })) return
 
     const message = `Hi, I'm ${form.name}.
     ${form.email ? `Email: ${form.email}` : ''}
@@ -50,13 +51,16 @@ export function ContactSection(): JSX.Element {
 
   const handleSubmit = async (e: React.MouseEvent<HTMLButtonElement>): Promise<void> => {
     e.preventDefault()
-    if (!form.name || !form.email || !form.message) return
+    if (!validateForm({ requireEmail: true })) return
 
     setStatus('loading')
 
     // TODO: Wire up EmailJS or your preferred email service
-    // import emailjs from '@emailjs/browser'
-    // await emailjs.send(VITE_EMAILJS_SERVICE_ID, VITE_EMAILJS_TEMPLATE_ID, form, VITE_EMAILJS_PUBLIC_KEY)
+     
+    await emailjs.send(import.meta.env.VITE_EMAILJS_SERVICE_ID,
+                       import.meta.env.VITE_EMAILJS_TEMPLATE_ID,
+                       form as unknown as Record<string, unknown>,
+                       import.meta.env.VITE_EMAILJS_PUBLIC_KEY)
 
     // Simulated delay for now
     await new Promise(r => setTimeout(r, 1200))
@@ -64,11 +68,21 @@ export function ContactSection(): JSX.Element {
     setForm(initialForm)
   }
 
-  const validateForm = () => {
-  const newErrors: { name?: string; message?: string } = {}
+  const validateForm = ({ requireEmail = false }: { requireEmail?: boolean }) => {
+  const newErrors: { name?: string; email?: string; message?: string } = {}
 
   if (!form.name.trim()) {
     newErrors.name = 'We\'d love to know your name'
+  }
+
+  if (requireEmail) {
+    if (!form.email.trim()) {
+      newErrors.email = 'Please provide your email address before sending email'
+    } else if (
+      !/^[A-Z0-9._%+-]+@[A-Z0-9.-]+\.[A-Z]{2,}$/i.test(form.email)
+    ) {
+      newErrors.email = 'Please enter a valid email address'
+    }
   }
 
   if (!form.message.trim()) {
@@ -117,7 +131,7 @@ export function ContactSection(): JSX.Element {
           {/* Right: Form */}
           <div className={styles.formWrapper}>
             <div className={styles.formGroup}>
-              <label htmlFor="name" className={styles.label}>Full Name</label>
+              <label htmlFor="name" className={styles.label}>Full Name*</label>
               <input
                 id="name" name="name" type="text"
                 placeholder="Your name"
@@ -130,15 +144,16 @@ export function ContactSection(): JSX.Element {
             </div>
 
             <div className={styles.formGroup}>
-              <label htmlFor="email" className={styles.label}>Email</label>
+              <label htmlFor="email" className={styles.label}>Email Address*</label>
               <input
                 id="email" name="email" type="email"
-                placeholder="you@example.com"
+                placeholder="Required only for email inquiries"
                 value={form.email}
                 onChange={handleChange}
-                className={styles.input}
+                className={`${styles.textarea} ${errors.email ? styles.inputError : ''}`}
                 required
               />
+              {errors.email && <p className={styles.errorText}>{errors.email}</p>}
             </div>
 
             <div className={styles.formGroup}>
@@ -153,7 +168,7 @@ export function ContactSection(): JSX.Element {
             </div>
 
             <div className={styles.formGroup}>
-              <label htmlFor="message" className={styles.label}>Message</label>
+              <label htmlFor="message" className={styles.label}>Message*</label>
               <textarea
                 id="message" name="message"
                 placeholder="How can we help you?"
