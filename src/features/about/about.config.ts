@@ -63,12 +63,12 @@ export const aboutConfig = {
     {
       institution: 'Uttarakhand Sanskrit University, Haridwar',
       qualification: 'Master’s in yogic science',
-      detail: 'Specialization in Hatha Yoga',
+      detail: '',
     },
     {
-      institution: 'Rishikesh Vinyasa Yoga School, Rishikesh',
+      institution: 'Arogyam Institute, Jalandhar',
       qualification: 'PGD in Ayurveda & Nutrition Diet',
-      detail: 'Ashtanga Vinyasa',
+      detail: '',
     }
   ],
 
@@ -76,6 +76,7 @@ export const aboutConfig = {
     {
       institution: 'Rishikesh Vinyasa Yoga School, Rishikesh',
       role: 'Assistant Teacher',
+      detail: '2 years of online & offline experience',
     },
   ],
 }

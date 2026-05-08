@@ -219,6 +219,7 @@ export function AboutSection(): JSX.Element {
                   key={i}
                   institution={e.institution}
                   qualification={e.role}
+                  detail={e.detail}
                 />
               ))}
             </div>
