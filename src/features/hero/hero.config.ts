@@ -57,6 +57,8 @@ export const heroConfig = {
     { label: 'Corporate Sessions' },
     { label: 'Online 1-on-1' },
     { label: 'Online Group Classes' },
+    { label: 'Offline Sound Healing' },
+    { label: 'Offline Individual and Group Classes' },
   ],
 
   // ── CTA Buttons ────────────────────────────────────────────────────────────
