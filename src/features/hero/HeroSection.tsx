@@ -1,9 +1,12 @@
 import { heroConfig } from './hero.config'
 import { useScrollReveal } from '@hooks/useScrollReveal'
+import { BookingModal }    from '@features/booking/BookingModal'
+import { useBookingModal } from '@features/booking/useBookingModal'
 import styles from './HeroSection.module.css'
 
 export function HeroSection(): JSX.Element {
   const contentRef = useScrollReveal<HTMLDivElement>()
+  const { isOpen, openModal, closeModal } = useBookingModal()
 
   return (
     <section className={styles.hero} id="home">
@@ -44,9 +47,9 @@ export function HeroSection(): JSX.Element {
           </div>
 
           <div className={styles.ctas}>
-            <a href={heroConfig.primaryCta.href} className={styles.ctaPrimary}>
+            <button className={styles.ctaPrimary} onClick={openModal} type="button">
               {heroConfig.primaryCta.label}
-            </a>
+            </button>
             <a href={heroConfig.secondaryCta.href} className={styles.ctaSecondary}>
               {heroConfig.secondaryCta.label}
             </a>
@@ -80,6 +83,7 @@ export function HeroSection(): JSX.Element {
 
         </div>
       </div>
+      <BookingModal isOpen={isOpen} onClose={closeModal} />
     </section>
   )
 }
