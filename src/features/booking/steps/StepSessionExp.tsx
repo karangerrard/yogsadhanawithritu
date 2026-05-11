@@ -61,7 +61,7 @@ const EXPERIENCES: Experience[] = [
   {
     id: 'shared-circle',
     icon: <SharedCircleIcon />,
-    title: 'Shared Online Circle',
+    title: 'Online Group Class',
     subtitle: 'Small group · Live virtual',
     description: 'Practice alongside a curated group of like-minded souls. Shared energy, guided intention, collective stillness.',
     tags: ['60 min', 'Live stream', 'Small group'],
@@ -79,7 +79,7 @@ const EXPERIENCES: Experience[] = [
   {
     id: 'group-wellness',
     icon: <GroupWellnessIcon />,
-    title: 'Group Wellness Gathering',
+    title: 'Offline Group Gathering',
     subtitle: 'Community · Shared space',
     description: 'Immerse in the warmth of community. Sound, breath, and movement held together in a thoughtfully curated gathering.',
     tags: ['75–90 min', 'In-person', 'Community'],
