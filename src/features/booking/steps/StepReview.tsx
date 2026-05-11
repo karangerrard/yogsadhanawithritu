@@ -70,6 +70,16 @@ function IconEdit() {
   )
 }
 
+function IconExperience() {
+  return (
+    <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.75" strokeLinecap="round" strokeLinejoin="round">
+      <path d="M12 3l1.5 4.5L18 9l-4.5 1.5L12 15l-1.5-4.5L6 9l4.5-1.5z"/>
+      <path d="M19 3v4M21 5h-4"/>
+      <path d="M5 17v2M6 18H4"/>
+    </svg>
+  )
+}
+
 export function StepReview({ data, onSubmit, onEdit }: Props) {
   const [name,    setName]    = useState(data.name    || '')
   const [email,   setEmail]   = useState(data.email   || '')
@@ -91,6 +101,21 @@ export function StepReview({ data, onSubmit, onEdit }: Props) {
   // For Email: name + valid email required
   const canEmail    = nameOk && isValidEmail(email)
 
+  const SESSION_LABELS: Record<string, string> = {
+  'private-online':     'Online 1-on-1 Session',
+  'shared-circle':      'Online Group Class',
+  'private-inperson':   'Private Session',
+  'group-wellness':     'Offline Group Class',
+  }
+
+  const SERVICE_LABELS: Record<string, string> = {
+  'yoga':            'Yoga & Asana',
+  'pranayama':       'Pranayama & Meditation',
+  'ayurveda':        'Ayurveda & Naturopathy',
+  'sound':           'Sound Healing Therapy',
+  // add whatever IDs your StepSessionExp stores
+  }
+
   const handleEmailChange = (v: string) => {
     setEmail(v)
     if (emailError && isValidEmail(v)) setEmailError('')
@@ -111,15 +136,16 @@ export function StepReview({ data, onSubmit, onEdit }: Props) {
 
     if (via === 'whatsapp') {
       const waMsg = encodeURIComponent(
-        `🪷 *Wellness Demo Booking*\n\n` +
-        `*Name:* ${name}\n` +
-        `*Phone:* ${phone}\n` +
-        `${email ? `*Email:* ${email}\n` : ''}` +
-        `\n*Session:* ${data.sessionType || '—'}\n` +
-        `*Date:* ${data.date || '—'}\n` +
-        `*Time:* ${data.timeSlot || '—'}\n` +
-        `*Timezone:* ${data.timezone || '—'}\n` +
-        `${message ? `\n*Message:* ${message}` : ''}`
+        `🪷 Wellness Demo Booking\n\n` +
+        `Name: ${name}\n` +
+        `Phone: ${phone}\n` +
+        `${email ? `Email: ${email}\n` : ''}` +
+        `\nSession: ${data.sessionType || '—'}\n` +
+        `Service: ${data.service || '—'}\n` +
+        `Date: ${data.date || '—'}\n` +
+        `Time: ${data.timeSlot || '—'}\n` +
+        `Timezone: ${data.timezone || '—'}\n` +
+        `${message ? `\nMessage: ${message}` : ''}`
       )
       window.open(`https://wa.me/${WA_NUMBER}?text=${waMsg}`, '_blank', 'noopener,noreferrer')
     } else {
@@ -131,6 +157,7 @@ export function StepReview({ data, onSubmit, onEdit }: Props) {
         `Email:    ${email}\n` +
         `Phone:    ${phone || 'N/A'}\n\n` +
         `Session:  ${data.sessionType || '—'}\n` +
+        `Service:  ${data.service || '—'}\n` +
         `Date:     ${data.date || '—'}\n` +
         `Time:     ${data.timeSlot || '—'}\n` +
         `Timezone: ${data.timezone || '—'}\n` +
@@ -151,9 +178,10 @@ export function StepReview({ data, onSubmit, onEdit }: Props) {
   // ── Summary rows ─────────────────────────────────────────────────────────
   const summaryRows: SummaryRow[] = [
     { icon: <IconGlobe />,    label: 'Timezone', value: data.timezone    || '—', editStep: 0, editLabel: 'Change' },
-    { icon: <IconYoga />,     label: 'Session',  value: data.sessionType || '—', editStep: 1, editLabel: 'Change' },
-    { icon: <IconCalendar />, label: 'Date',     value: data.date        || '—', editStep: 2, editLabel: 'Change' },
-    { icon: <IconClock />,    label: 'Time',     value: data.timeSlot    || '—', editStep: 3, editLabel: 'Change' },
+    { icon: <IconYoga />,     label: 'Session Type', value: SESSION_LABELS[data.sessionType] || '—', editStep: 1, editLabel: 'Change' },
+    { icon: <IconExperience />, label: 'Experience',value: SERVICE_LABELS[data.service]     || '—', editStep: 2, editLabel: 'Change' },
+    { icon: <IconCalendar />, label: 'Date',     value: data.date        || '—', editStep: 3, editLabel: 'Change' },
+    { icon: <IconClock />,    label: 'Time',     value: data.timeSlot    || '—', editStep: 4, editLabel: 'Change' },
   ]
 
   return (

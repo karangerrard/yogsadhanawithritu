@@ -1,6 +1,5 @@
 import React, { useEffect, useRef } from 'react'
 import type { BookingData } from '@features/booking/booking.config'
-import styles from '@features/booking/BookingModal.module.css'
 import cfStyles from '@features/booking/BookingModal.module.css'
 
 interface Props { data: BookingData; onClose: () => void }
@@ -44,8 +43,24 @@ export function StepConfirm({ data, onClose }: Props) {
     return () => clearTimeout(t)
   }, [])
 
+  const SESSION_LABELS: Record<string, string> = {
+  'private-online':     'Online 1-on-1 Session',
+  'shared-circle':      'Online Group Class',
+  'private-inperson':   'Private In-Person Experience',
+  'group-wellness':     'Offline Group Gathering',
+  }
+
+  const SERVICE_LABELS: Record<string, string> = {
+  'yoga':            'Yoga & Asana',
+  'pranayama':       'Pranayama & Meditation',
+  'ayurveda':        'Ayurveda & Naturopathy',
+  'sound':           'Sound Healing Therapy',
+  // add whatever IDs your StepSessionExp stores
+  }
+
   const summaryItems = [
-    { label: 'Session',  value: data.sessionType || '—' },
+    { label: 'Session',  value: SESSION_LABELS[data.sessionType] || '—' },
+    { label: 'Experience', value: SERVICE_LABELS[data.service]        || '—' },
     { label: 'Date',     value: data.date         || '—' },
     { label: 'Time',     value: data.timeSlot      || '—' },
     { label: 'Timezone', value: data.timezone      || '—' },
