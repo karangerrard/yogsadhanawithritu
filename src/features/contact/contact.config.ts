@@ -4,7 +4,7 @@ export const contactConfig = {
   subheading: 'Have a question or ready to start? We\'d love to hear from you.',
   email: 'yogsadhanawithritu@gmail.com',
   phone: '+91 9041918567',
-  location: 'Gurugram, Haryana, India',
+  location: 'India',
   socials: [
     { label: 'Instagram', href: 'https://www.instagram.com/yogsadhanawithritu/' },
   ],
