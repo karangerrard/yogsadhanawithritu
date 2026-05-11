@@ -1,4 +1,4 @@
-import React, { useState, useEffect, useRef, useCallback, useMemo } from 'react'
+import React, { useState, useEffect, useRef, useMemo } from 'react'
 import type { BookingData } from '@features/booking/booking.config'
 import tzStyles from '@features/booking/BookingModal.module.css'
 import styles from '@features/booking/BookingModal.module.css'
