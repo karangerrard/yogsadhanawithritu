@@ -136,12 +136,12 @@ export function StepReview({ data, onSubmit, onEdit }: Props) {
 
     if (via === 'whatsapp') {
       const waMsg = encodeURIComponent(
-        `🪷 Wellness Demo Booking\n\n` +
+        `Wellness Demo Booking\n\n` +
         `Name: ${name}\n` +
         `Phone: ${phone}\n` +
         `${email ? `Email: ${email}\n` : ''}` +
-        `\nSession: ${data.sessionType || '—'}\n` +
-        `Service: ${data.service || '—'}\n` +
+        `\nSession: ${SESSION_LABELS[data.sessionType] || '—'}\n` +
+        `Service: ${SERVICE_LABELS[data.service] || '—'}\n` +
         `Date: ${data.date || '—'}\n` +
         `Time: ${data.timeSlot || '—'}\n` +
         `Timezone: ${data.timezone || '—'}\n` +
@@ -156,8 +156,8 @@ export function StepReview({ data, onSubmit, onEdit }: Props) {
         `Name:     ${name}\n` +
         `Email:    ${email}\n` +
         `Phone:    ${phone || 'N/A'}\n\n` +
-        `Session:  ${data.sessionType || '—'}\n` +
-        `Service:  ${data.service || '—'}\n` +
+        `Session:  ${SESSION_LABELS[data.sessionType] || '—'}\n` +
+        `Service:  ${SERVICE_LABELS[data.service] || '—'}\n` +
         `Date:     ${data.date || '—'}\n` +
         `Time:     ${data.timeSlot || '—'}\n` +
         `Timezone: ${data.timezone || '—'}\n` +
