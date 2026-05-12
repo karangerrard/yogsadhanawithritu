@@ -3,10 +3,17 @@ import { useScrollReveal } from '@hooks/useScrollReveal'
 import { BookingModal }    from '@features/booking/BookingModal'
 import { useBookingModal } from '@features/booking/useBookingModal'
 import styles from './HeroSection.module.css'
+import { useEffect } from 'react'
 
 export function HeroSection(): JSX.Element {
   const contentRef = useScrollReveal<HTMLDivElement>()
   const { isOpen, openModal, closeModal } = useBookingModal()
+
+  useEffect(() => {
+  const handler = () => openModal()
+  window.addEventListener('open-booking-modal', handler)
+  return () => window.removeEventListener('open-booking-modal', handler)
+}, [openModal])
 
   return (
     <section className={styles.hero} id="home">

@@ -1,6 +1,7 @@
 import { useState, useEffect } from 'react'
 import { useMediaQuery } from '@hooks/useMediaQuery'
 import styles from './Navbar.module.css'
+import { useBookingModal } from '@/features/booking/useBookingModal'
 
 const NAV_LINKS = [
   { label: 'Home',     href: '#home' },
@@ -14,6 +15,8 @@ export function Navbar(): JSX.Element {
   const [scrolled, setScrolled] = useState(false)
   const [menuOpen, setMenuOpen] = useState(false)
   const isMobile = useMediaQuery('(max-width: 767px)')
+
+  const { openModal } = useBookingModal();
 
   useEffect(() => {
     const handleScroll = (): void => setScrolled(window.scrollY > 20)
@@ -51,7 +54,12 @@ export function Navbar(): JSX.Element {
         </nav>
 
         {/* Desktop CTA */}
-        <a href="#contact" className={styles.ctaBtn}>Book Now</a>
+        <button className={styles.ctaBtn} onClick={() => {
+            handleNavClick();
+            window.dispatchEvent(new CustomEvent('open-booking-modal'));
+          }}>  
+            Book Demo
+        </button>
 
         {/* Hamburger (mobile only) */}
         <button
@@ -79,9 +87,12 @@ export function Navbar(): JSX.Element {
               {link.label}
             </a>
           ))}
-          <a href="#contact" className={styles.mobileCta} onClick={handleNavClick}>
-            Book Now
-          </a>
+          <button className={styles.mobileCta} onClick={() => {
+            handleNavClick();
+            window.dispatchEvent(new CustomEvent('open-booking-modal'));
+          }}>
+            Book Demo
+          </button>
         </nav>
       )}
     </header>
