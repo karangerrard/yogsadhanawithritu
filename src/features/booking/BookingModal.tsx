@@ -113,13 +113,7 @@ export function BookingModal({ isOpen, onClose }: BookingModalProps) {
         `🧘 *Demo Booking Request*\n\n*Name:* ${merged.name}\n*Session:* ${merged.sessionType}\n*Date:* ${merged.date}\n*Time:* ${merged.timeSlot}\n*Timezone:* ${merged.timezone}\n*Message:* ${merged.message || 'None'}`
       )
       window.open(`https://wa.me/?text=${msg}`, '_blank')
-    } else {
-      const subject = encodeURIComponent('Demo Booking – Yogsadhana With Ritu')
-      const body    = encodeURIComponent(
-        `Demo Booking Request\n\nName: ${merged.name}\nSession: ${merged.sessionType}\nDate: ${merged.date}\nTime: ${merged.timeSlot}\nTimezone: ${merged.timezone}\nMessage: ${merged.message || 'None'}`
-      )
-      window.open(`mailto:?subject=${subject}&body=${body}`, '_blank')
-    }
+    } 
     syncSubmitted(true)
     setCurrentStep(totalSteps)
   }
