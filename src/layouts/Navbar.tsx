@@ -5,7 +5,7 @@ import { useBookingModal } from '@/features/booking/useBookingModal'
 
 const NAV_LINKS = [
   { label: 'Home',     href: '#home' },
-  { label: 'About Me',    href: '#services' },
+  { label: 'About Me',    href: '#about' },
   { label: 'Offerings', href: '#services' },
   { label: 'Reviews',     href: '#testimonials' },
   { label: 'Contact',  href: '#contact' },

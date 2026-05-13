@@ -1,7 +1,8 @@
-import React, { useState, useRef } from 'react'
+import React, { useState } from 'react'
 import type { BookingData } from '@features/booking/booking.config'
 import styles from '@features/booking/BookingModal.module.css'
 import rvStyles from '@features/booking/BookingModal.module.css'
+import emailjs from '@emailjs/browser'
 
 interface Props {
   data: BookingData
@@ -14,7 +15,7 @@ const EMAIL_RE = /^[^\s@]+@[^\s@]+\.[^\s@]+$/
 function isValidEmail(v: string) { return EMAIL_RE.test(v.trim()) }
 
 // ── WhatsApp number — update to your business number ───────────────────────
-const WA_NUMBER = '919971028343' // e.g. 91XXXXXXXXXX (no + or spaces)
+const WA_NUMBER = '919041918567' // e.g. 91XXXXXXXXXX (no + or spaces)
 
 // ── Summary row definition ──────────────────────────────────────────────────
 interface SummaryRow {
@@ -89,7 +90,6 @@ export function StepReview({ data, onSubmit, onEdit }: Props) {
   const [emailError,  setEmailError]  = useState('')
   const [submitting,  setSubmitting]  = useState(false)
   const [submitVia,   setSubmitVia]   = useState<'whatsapp'|'email'|null>(null)
-  const submitLock = useRef(false)
 
   // ── Validation ────────────────────────────────────────────────────────────
   const nameOk  = name.trim().length > 0
@@ -123,32 +123,62 @@ export function StepReview({ data, onSubmit, onEdit }: Props) {
 
   // ── Submission ────────────────────────────────────────────────────────────
   const handleSubmit = async (via: 'whatsapp' | 'email') => {
-    if (submitLock.current) return
-    if (via === 'email' && !isValidEmail(email)) {
-      setEmailError('Please enter a valid email address.')
-      return
+  if (via === 'email' && !isValidEmail(email)) {
+    setEmailError('Please enter a valid email address.')
+    return
+  }
+  setSubmitting(true)
+  setSubmitVia(via)
+
+  const merged: Partial<BookingData> = { name, email, phone, message }
+
+  if (via === 'whatsapp') {
+    const waMsg = encodeURIComponent(
+      `Demo Session with Ritu\n\n` +
+      `Name: ${name}\n` +
+      `Phone: ${phone}\n` +
+      `${email ? `Email: ${email}\n` : ''}` +
+      `\nSession: ${SESSION_LABELS[data.sessionType] || '—'}\n` +
+      `Service: ${SERVICE_LABELS[data.service] || '—'}\n` +
+      `Date: ${data.date || '—'}\n` +
+      `Time: ${data.timeSlot || '—'}\n` +
+      `Timezone: ${data.timezone || '—'}\n` +
+      `${message ? `\nMessage: ${message}` : ''}`
+    )
+    window.open(`https://wa.me/${WA_NUMBER}?text=${waMsg}`, '_blank', 'noopener,noreferrer')
+
+    setTimeout(() => {
+      onSubmit(merged, via)
+      setSubmitting(false)
+      setSubmitVia(null)
+    }, 900)
+
+  } else {
+    // ── EmailJS ──────────────────────────────────────────
+    const templateParams = {
+      from_name:        name,
+      from_email:       email,
+      from_phone:       phone || 'N/A',
+      session_type:     SESSION_LABELS[data.sessionType] || data.sessionType || '—',
+      service_type:     SERVICE_LABELS[data.service]     || data.service     || '—',
+      booking_date:     data.date      || '—',
+      booking_time:     data.timeSlot  || '—',
+      booking_timezone: data.timezone  || '—',
+      message:          message        || 'No additional message',
+      reply_to:         email,
     }
-    submitLock.current = true
-    setSubmitting(true)
-    setSubmitVia(via)
 
-    const merged: Partial<BookingData> = { name, email, phone, message }
-
-    if (via === 'whatsapp') {
-      const waMsg = encodeURIComponent(
-        `Wellness Demo Booking\n\n` +
-        `Name: ${name}\n` +
-        `Phone: ${phone}\n` +
-        `${email ? `Email: ${email}\n` : ''}` +
-        `\nSession: ${SESSION_LABELS[data.sessionType] || '—'}\n` +
-        `Service: ${SERVICE_LABELS[data.service] || '—'}\n` +
-        `Date: ${data.date || '—'}\n` +
-        `Time: ${data.timeSlot || '—'}\n` +
-        `Timezone: ${data.timezone || '—'}\n` +
-        `${message ? `\nMessage: ${message}` : ''}`
+    try {
+      await emailjs.send(
+        import.meta.env.VITE_EMAILJS_SERVICE_ID,   // EmailJS → Email Services → Service ID
+        import.meta.env.VITE_EMAILJS_TEMPLATE_ID_DEMO,  // EmailJS → Email Templates → Template ID
+        templateParams,
+        import.meta.env.VITE_EMAILJS_PUBLIC_KEY    // EmailJS → Account → Public Key
       )
-      window.open(`https://wa.me/${WA_NUMBER}?text=${waMsg}`, '_blank', 'noopener,noreferrer')
-    } else {
+      onSubmit(merged, via)
+    } catch (err) {
+      console.error('EmailJS error:', err)
+      // Fallback to mailto if EmailJS fails
       const subject = encodeURIComponent(`Wellness Demo Booking – ${name}`)
       const body    = encodeURIComponent(
         `Wellness Demo Booking Request\n` +
@@ -164,16 +194,13 @@ export function StepReview({ data, onSubmit, onEdit }: Props) {
         `${message ? `\nMessage:\n${message}` : ''}`
       )
       window.open(`mailto:?subject=${subject}&body=${body}`, '_self')
-    }
-
-    // Brief delay so animation reads, then hand off
-    setTimeout(() => {
       onSubmit(merged, via)
+    } finally {
       setSubmitting(false)
       setSubmitVia(null)
-      submitLock.current = false
-    }, 900)
+    }
   }
+}
 
   // ── Summary rows ─────────────────────────────────────────────────────────
   const summaryRows: SummaryRow[] = [
