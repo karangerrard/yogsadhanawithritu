@@ -29,9 +29,14 @@ export const aboutConfig = {
   education: [
     {
       institution: 'Uttarakhand Sanskrit University, Haridwar',
-      qualification: 'Masters in Yogacharya',
+      qualification: 'Masters in Yogic Science',
       detail: '8 CGPA',
     },
+    {
+      institution: 'Arogyam Institute, Jalandhar',
+      qualification: 'PGD in Ayurveda & Nutrition Diet',
+      detail: '',
+    }
   ],
 
   certifications: [
@@ -60,16 +65,6 @@ export const aboutConfig = {
       qualification: 'Aerial Yoga Training',
       detail: 'Level 1 & 2',
     },
-    {
-      institution: 'Uttarakhand Sanskrit University, Haridwar',
-      qualification: 'Master’s in yogic science',
-      detail: '',
-    },
-    {
-      institution: 'Arogyam Institute, Jalandhar',
-      qualification: 'PGD in Ayurveda & Nutrition Diet',
-      detail: '',
-    }
   ],
 
   experience: [
@@ -77,6 +72,16 @@ export const aboutConfig = {
       institution: 'Rishikesh Vinyasa Yoga School, Rishikesh',
       role: 'Assistant Teacher',
       detail: '2 years of online & offline experience',
+    },
+    {
+      institution: 'Rama Space Sound Healing, Rishikesh',
+      role: 'Sound Therapist',
+      detail: '2 years (2022-2024)',
+    },
+    {
+      institution: '',
+      role: 'Yoga & Sound Therapist',
+      detail: 'From 2024 - Present',
     },
   ],
 }

@@ -57,7 +57,7 @@ export const heroConfig = {
     { label: 'Corporate Sessions' },
     { label: 'Online 1-on-1' },
     { label: 'Online Group Classes' },
-    { label: 'Sound Healing Only Offline' },
+    { label: 'Sound Healing' },
     { label: 'Offline Individual and Group Classes' },
   ],
 
