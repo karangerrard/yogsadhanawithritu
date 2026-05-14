@@ -3,11 +3,11 @@ import { useMediaQuery } from '@hooks/useMediaQuery'
 import styles from './Navbar.module.css'
 
 const NAV_LINKS = [
-  { label: 'Home',     href: '#home' },
-  { label: 'About Me',    href: '#about' },
-  { label: 'Offerings', href: '#services' },
-  { label: 'Reviews',     href: '#testimonials' },
-  { label: 'Contact',  href: '#contact' },
+  { label: 'Home',      href: 'home' },
+  { label: 'About Me',  href: 'about' },
+  { label: 'Offerings', href: 'services' },
+  { label: 'Reviews',   href: 'testimonials' },
+  { label: 'Contact',   href: 'contact' },
 ]
 
 export function Navbar(): JSX.Element {
@@ -21,18 +21,30 @@ export function Navbar(): JSX.Element {
     return () => window.removeEventListener('scroll', handleScroll)
   }, [])
 
-  // Close mobile menu when switching to desktop
   useEffect(() => {
     if (!isMobile) setMenuOpen(false)
   }, [isMobile])
 
-  const handleNavClick = (): void => setMenuOpen(false)
+  // ✅ Updated: smooth scroll without adding #hash to URL
+  const handleNavClick = (e: React.MouseEvent<HTMLAnchorElement>, sectionId: string): void => {
+    e.preventDefault()
+    setMenuOpen(false)
+    const section = document.getElementById(sectionId)
+    if (section) {
+      section.scrollIntoView({ behavior: 'smooth' })
+      window.history.replaceState(null, '', window.location.pathname)
+    }
+  }
 
   return (
     <header className={`${styles.navbar} ${scrolled ? styles.scrolled : ''}`}>
       <div className={`container ${styles.inner}`}>
         {/* Logo */}
-        <a href="#home" className={styles.logo} onClick={handleNavClick}>
+        <a
+          href="#home"
+          className={styles.logo}
+          onClick={(e) => handleNavClick(e, 'home')}
+        >
           <svg className={styles.logoIcon} viewBox="0 0 40 40" fill="none">
             <path d="M20 8 C14 8 8 14 8 20 C8 26 14 30 20 30 C26 30 32 26 32 20" stroke="currentColor" strokeWidth="2" strokeLinecap="round"/>
             <path d="M20 8 C20 14 24 18 30 20" stroke="currentColor" strokeWidth="2" strokeLinecap="round"/>
@@ -44,21 +56,29 @@ export function Navbar(): JSX.Element {
         {/* Desktop nav */}
         <nav className={styles.desktopNav} aria-label="Main navigation">
           {NAV_LINKS.map(link => (
-            <a key={link.label} href={link.href} className={styles.navLink}>
+            <a
+              key={link.label}
+              href={`#${link.href}`}
+              className={styles.navLink}
+              onClick={(e) => handleNavClick(e, link.href)}  // ✅ passes section id
+            >
               {link.label}
             </a>
           ))}
         </nav>
 
         {/* Desktop CTA */}
-        <button className={styles.ctaBtn} onClick={() => {
-            handleNavClick();
-            window.dispatchEvent(new CustomEvent('open-booking-modal'));
-          }}>  
-            Book Demo
+        <button
+          className={styles.ctaBtn}
+          onClick={() => {
+            setMenuOpen(false)
+            window.dispatchEvent(new CustomEvent('open-booking-modal'))
+          }}
+        >
+          Book Demo
         </button>
 
-        {/* Hamburger (mobile only) */}
+        {/* Hamburger */}
         <button
           className={styles.hamburger}
           onClick={() => setMenuOpen(o => !o)}
@@ -77,17 +97,20 @@ export function Navbar(): JSX.Element {
           {NAV_LINKS.map(link => (
             <a
               key={link.label}
-              href={link.href}
+              href={`#${link.href}`}
               className={styles.mobileNavLink}
-              onClick={handleNavClick}
+              onClick={(e) => handleNavClick(e, link.href)}  // ✅ same fix
             >
               {link.label}
             </a>
           ))}
-          <button className={styles.mobileCta} onClick={() => {
-            handleNavClick();
-            window.dispatchEvent(new CustomEvent('open-booking-modal'));
-          }}>
+          <button
+            className={styles.mobileCta}
+            onClick={() => {
+              setMenuOpen(false)
+              window.dispatchEvent(new CustomEvent('open-booking-modal'))
+            }}
+          >
             Book Demo
           </button>
         </nav>
