@@ -401,6 +401,13 @@
   border-radius: var(--bm-radius-xl);
   padding: 1rem;
   border: 1px solid var(--bm-sage-mist);
+  box-sizing: border-box;
+  overflow: hidden;
+  /* Force Safari GPU layer — prevents repaint glitch during resize */
+  -webkit-transform: translateZ(0);
+  transform: translateZ(0);
+  will-change: contents;
+  contain: layout;
 }
 
 .calHeader {
@@ -421,6 +428,7 @@
   width: 32px;
   height: 32px;
   border-radius: 50%;
+  min-width: 36px; 
   border: 1.5px solid var(--bm-sage-mist);
   background: var(--bm-cream);
   display: flex;
@@ -455,24 +463,43 @@
   display: grid;
   grid-template-columns: repeat(7, 1fr);
   gap: 0.2rem;
+  width: 100%;
+  gap: 2px;
+  box-sizing: border-box;
 }
 
-.calCell { display: flex; align-items: center; justify-content: center; }
+.calCell { 
+  position: relative;
+  width: 100%;
+  min-width: 0;  
+  display: flex; 
+  align-items: center; 
+  justify-content: center;
+  /* padding-bottom trick: 100% of the cell WIDTH = height */
+  padding-bottom: 100%;     /* ← makes it a square on ALL browsers */
+  height: 0;                /* ← required for the trick to work */
+  box-sizing: border-box; 
+  width: calc((100% ) / 7);
+  aspect-ratio: 1;
+}
 
 .calDay {
-  width: 100%;
-  aspect-ratio: 1;
+  position: absolute;
+  inset: 5%;           /* 5% gap from cell edges = breathing room */
+  width: 90%;
+  height: 90%;
   border-radius: 50%;
   border: none;
   background: transparent;
-  font-size: 0.75rem;
+  font-size: clamp(0.65rem, 2.5vw, 0.8rem);
   font-weight: 500;
   color: var(--bm-text);
   cursor: pointer;
-  transition: background 0.15s ease, color 0.15s ease, transform 0.12s ease;
   display: flex;
   align-items: center;
   justify-content: center;
+  transition: background 0.15s ease, color 0.15s ease, transform 0.12s ease;
+  -webkit-tap-highlight-color: transparent;
 }
 .calDay:hover:not(:disabled):not(.calDaySelected) {
   background: var(--bm-sage-mist);
@@ -1614,8 +1641,7 @@
   --cal-radius-xl:    1rem;
   --cal-radius-2xl:   1.5rem;
   --cal-radius-full:  9999px;
-  --cal-transition:   cubic-bezier(0.16, 1, 0.3, 1);
-  --cal-day-size:     42px;   /* desktop day button size */
+  --cal-transition:   cubic-bezier(0.16, 1, 0.3, 1);   /* desktop day button size */
 }
 
 /* ══════════════════════════════════════════════════════════════════════════
@@ -1739,16 +1765,24 @@
   display: grid;
   grid-template-columns: repeat(7, 1fr);
   gap: 3px;
+  width: 100%;
+  box-sizing: border-box;
 }
 
 .emptyCell {
   aspect-ratio: 1;
+  width: 100%;
 }
 
 .gridCell {
+  position: relative;
+  width: 100%;
+  aspect-ratio: 1;
   display: flex;
   align-items: center;
   justify-content: center;
+  overflow: hidden;
+  min-width: 0;           /* ← Safari grid blowout fix */
 }
 
 /* ── Month slide animation ───────────────────────────────────────────────── */
@@ -1769,49 +1803,50 @@
    DAY BUTTON
    ══════════════════════════════════════════════════════════════════════════ */
 .dayBtn {
-  position: relative;
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  justify-content: center;
-  width: var(--cal-day-size);
-  height: var(--cal-day-size);
+  position: absolute;        /* ← relative to gridCell */
+  inset: 20%;                 /* 6% gap from cell edges */
+  width: 60%;
+  height: 60%;
   border-radius: var(--cal-radius-full);
   border: 1.5px solid transparent;
   background: transparent;
   cursor: pointer;
   font-family: inherit;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  /* Remove all fixed min-width/min-height/width/height px values */
   transition:
-    background     0.18s var(--cal-transition),
-    border-color   0.18s var(--cal-transition),
-    color          0.18s var(--cal-transition),
-    transform      0.15s var(--cal-transition),
-    box-shadow     0.18s var(--cal-transition);
-  /* Touch-friendly: ensures minimum 44px tap area on mobile */
-  min-width: 40px;
-  min-height: 40px;
+    background    0.18s var(--cal-transition),
+    border-color  0.18s var(--cal-transition),
+    color         0.18s var(--cal-transition),
+    transform     0.15s var(--cal-transition),
+    box-shadow    0.18s var(--cal-transition);
 }
 
 /* ── Day number text ─────────────────────────────────────────────────────── */
 .dayNum {
-  font-size: 0.875rem;
+  font-size: clamp(0.6rem, 2.6vw, 0.875rem);  /* scales with viewport */
   font-weight: 500;
   color: var(--cal-text);
   line-height: 1;
   font-variant-numeric: tabular-nums;
   transition: color 0.18s ease;
+  pointer-events: none;      /* prevents text from absorbing clicks */
 }
 
 /* ── Today dot ───────────────────────────────────────────────────────────── */
 .todayDot {
   position: absolute;
-  bottom: 5px;
+  bottom: 12%;           /* % instead of fixed 5px — scales with button */
   left: 50%;
   transform: translateX(-50%);
-  width: 4px;
-  height: 4px;
+  width: clamp(3px, 0.8vw, 4px);   /* fluid size */
+  height: clamp(3px, 0.8vw, 4px);
   border-radius: 50%;
   background: var(--cal-sage);
+  pointer-events: none;
 }
 
 /* ── Today state ─────────────────────────────────────────────────────────── */
@@ -1839,9 +1874,6 @@
 .daySelected {
   background: var(--cal-sage) !important;
   border-color: var(--cal-sage-deep) !important;
-  box-shadow:
-    0 0 0 3px color-mix(in srgb, var(--cal-sage) 22%, transparent),
-    0 4px 12px rgba(82, 121, 111, 0.25);
   transform: scale(1.1) !important;
 }
 
@@ -1990,14 +2022,21 @@
 
 /* ── Mobile adjustments ──────────────────────────────────────────────────── */
 @media (max-width: 600px) {
-  .calendarCard { --cal-day-size: 38px; }
+  .calendarCard { 
+    padding: 1.125rem 0.875rem 0.875rem;
+    gap: 0.75rem;
+    border-radius: var(--cal-radius-xl);
+   }
 
   .dayBtn {
-    min-width: 36px;
-    min-height: 36px;
+    inset: 8%;          /* 84% button size — large tap target on mobile */
+    width: 84%;
+    height: 84%;
+    min-width: unset;
+    min-height: unset;
   }
 
-  .dayNum { font-size: 0.8125rem; }
+  .dayNum { font-size: clamp(0.65rem, 3.2vw, 0.85rem); }
 
   .monthName { font-size: 0.9375rem; }
 
